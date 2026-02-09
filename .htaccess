@@ -1,0 +1,7 @@
+# Laravel: document root trebuie sa fie public/ (Laravel docs: deployment).
+# Daca vhost-ul (ex. Laragon) pointeaza la radacina proiectului, acest .htaccess
+# redirectioneaza toate cererile catre public/ (alternativa acceptata in doc).
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

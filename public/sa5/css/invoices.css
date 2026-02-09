@@ -1,0 +1,94 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #000;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    padding: 6px;
+    font-size: inherit;
+    vertical-align: middle;
+}
+
+/* Labels */
+.label-sm {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* Clean small table */
+.table-clean-sm {
+    border: 0;
+    border-collapse: collapse;
+    width: 100%;
+}
+.table-clean-sm td {
+    font-size: 11px;
+    padding: 2px 4px;
+}
+
+/* Font sizes */
+.fs-10 { font-size: 10px; }
+.fs-11 { font-size: 11px; }
+.fs-12 { font-size: 12px; }
+.fs-13 { font-size: 13px; }
+.fs-14 { font-size: 14px; }
+
+/* Line heights */
+.lh-1 { line-height: 1; }
+.lh-15 { line-height: 1.5; }
+.lh-2 { line-height: 2; }
+
+/* Text alignment */
+.text-start { text-align: left; }
+.text-center { text-align: center; }
+.text-end { text-align: right; }
+
+/* Borders */
+.border-T { border-top: 0.5pt solid #000 !important; }
+.border-B { border-bottom: 0.5pt solid #000 !important; }
+.border-L { border-left: 0.5pt solid #000 !important; }
+.border-R { border-right: 0.5pt solid #000 !important; }
+.border-LR { border-left: 0.5pt solid #000 !important; border-right: 0.5pt solid #000 !important; }
+.border-LT { border-left: 0.5pt solid #000 !important; border-top: 0.5pt solid #000 !important; }
+.border-LB { border-left: 0.5pt solid #000 !important; border-bottom: 0.5pt solid #000 !important; }
+.border-all { border: 0.5pt solid #000 !important; }
+
+/* Light borders */
+.border-light-B { border-bottom: 0.3pt solid #000 !important; }
+.border-light-LR { border-left: 0.3pt solid #ccc !important; border-right: 0.3pt solid #ccc !important; }
+
+/* Product table */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Important for colgroup to work in mPDF */
+    font-size: 11px;
+}
+
+.product-table col {
+    display: table-column; /* Ensures proper colgroup rendering */
+}
+
+.product-table th,
+.product-table td {
+    padding: 3px;
+    vertical-align: middle;
+    word-wrap: break-word;
+    white-space: normal;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+.product-table th:nth-child(2),
+.product-table td:nth-child(2) {
+    text-align: left;
+}
