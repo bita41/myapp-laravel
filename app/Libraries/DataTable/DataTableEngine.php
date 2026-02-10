@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support;
+namespace App\Libraries\DataTable;
 
 use Closure;
 use Illuminate\Database\Query\Builder;
@@ -209,6 +209,7 @@ final class DataTableEngine
         $global = $this->request->input('search.value', '');
         $global = is_string($global) ? substr(trim($global), 0, self::SEARCH_MAX_LENGTH) : '';
 
+        // Global search (LIKE) on allowed columns
         if ($global !== '') {
             $cols = $this->searchColumns;
             $query->where(function (Builder $q) use ($cols, $global): void {
@@ -224,6 +225,12 @@ final class DataTableEngine
         }
 
         foreach ($colsInput as $i => $colInput) {
+            // Respect DataTables searchable flag
+            $searchable = $colInput['searchable'] ?? true;
+            if ($searchable === false || $searchable === 'false' || $searchable === 0 || $searchable === '0') {
+                continue;
+            }
+
             $val = $colInput['search']['value'] ?? '';
             $val = is_string($val) ? substr(trim($val), 0, self::SEARCH_MAX_LENGTH) : '';
             if ($val === '') {
@@ -232,6 +239,15 @@ final class DataTableEngine
 
             $colName = $this->columns[(int) $i] ?? null;
             if (!is_string($colName) || $colName === '') {
+                continue;
+            }
+
+            // select_search sends "exact:VALUE" (CI4 compatibility)
+            if (str_starts_with($val, 'exact:')) {
+                $exact = trim(substr($val, 6));
+                if ($exact !== '') {
+                    $query->where($colName, '=', $exact);
+                }
                 continue;
             }
 
@@ -257,6 +273,17 @@ final class DataTableEngine
             ($this->defaultOrderApplier)($query);
 
             return;
+        }
+
+        // Respect DataTables orderable flag
+        $colsInput = $this->request->input('columns', []);
+        if (is_array($colsInput) && isset($colsInput[$colIndex])) {
+            $orderable = $colsInput[$colIndex]['orderable'] ?? true;
+            if ($orderable === false || $orderable === 'false' || $orderable === 0 || $orderable === '0') {
+                ($this->defaultOrderApplier)($query);
+
+                return;
+            }
         }
 
         $query->orderBy($colName, $dir);

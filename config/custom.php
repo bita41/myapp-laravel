@@ -13,10 +13,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | App version (cache-busting for static assets, CI4-style)
+    |--------------------------------------------------------------------------
+    */
+    'app_version' => env('APP_VERSION', '1'),
+
+    /*
+    |--------------------------------------------------------------------------
     | DataTable elements per page
     |--------------------------------------------------------------------------
     | Default number of rows per page for DataTables (legacy / CI4 style).
     */
-    'datatable_per_page' => env('DATATABLE_ELEMENTS_PER_PAGE', 50),
+    'datatable_per_page' => env('DATATABLE_ELEMENTS_PER_PAGE', 25),
 
 ];

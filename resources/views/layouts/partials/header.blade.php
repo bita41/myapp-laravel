@@ -28,8 +28,11 @@
     </button>
     <!-- Theme modes -->
     <button type="button" class="btn btn-system" data-action="toggle-theme" aria-label="{{ __('Toggle Dark Mode') }}" aria-pressed="false">
-        <svg class="sa-icon sa-icon-2x">
-            <use href="{{ asset('sa5/img/sprite.svg#circle') }}"></use>
+        <svg class="sa-icon sa-icon-2x sa-mode-light">
+            <use href="{{ asset('sa5/img/sprite.svg#sun') }}"></use>
+        </svg>
+        <svg class="sa-icon sa-icon-2x sa-mode-dark">
+            <use href="{{ asset('sa5/img/sprite.svg#moon') }}"></use>
         </svg>
     </button>
 

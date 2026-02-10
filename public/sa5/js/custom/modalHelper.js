@@ -1,3 +1,11 @@
+/**
+ * @deprecated This file is deprecated and will be removed in a future version.
+ * All functionality has been migrated to TypeScript services in resources/js/services/
+ * - ModalHelper → resources/js/services/ModalService.ts
+ * Please use the new ModalService class via window.ModalHelper (which now points to the TypeScript version).
+ */
+console.warn('[DEPRECATED] Legacy modalHelper.js is loaded. Functionality migrated to ModalService.ts');
+
 var ModalHelper = {
 
     closeModal: function($form) {

@@ -66,8 +66,8 @@
                             <span class="nav-link-text">{{ __('Roles') }}</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ request()->routeIs('settings.settings.*') ? 'active' : '' }}">
-                        <a href="{{ route('settings.settings.index') }}">
+                    <li class="nav-item {{ request()->routeIs('settings.index') ? 'active' : '' }}">
+                        <a href="{{ route('settings.index') }}">
                             <span class="nav-link-text">{{ __('Settings') }}</span>
                         </a>
                     </li>

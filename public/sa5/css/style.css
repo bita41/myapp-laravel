@@ -379,3 +379,11 @@ input[readonly] {
     background-color: #f8f9fa;
     cursor: not-allowed;
 }
+
+/* Theme toggle: show sun in light mode, moon in dark mode */
+[data-bs-theme="light"] .sa-mode-dark {
+    display: none;
+}
+[data-bs-theme="dark"] .sa-mode-light {
+    display: none;
+}

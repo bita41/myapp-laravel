@@ -54,7 +54,7 @@ if (!function_exists('app_language_file')) {
 if (!function_exists('l')) {
     /**
      * Dictionary lookup by parameter key, from DB dictionaries table.
-     * Uses cache per language file.
+     * Uses cache per language file. CI4-style: html_entity_decode on value, fallback to key.
      */
     function l(string $key, ?string $langFile = null): string
     {
@@ -83,7 +83,7 @@ if (!function_exists('l')) {
 
         $value = $dict[$key] ?? '';
 
-        return $value !== '' ? $value : $key;
+        return $value !== '' ? html_entity_decode($value) : $key;
     }
 }
 

@@ -18,26 +18,26 @@
 <meta name="msapplication-tap-highlight" content="no">
 
 {{-- Vendor CSS (cache-busting ?v=filemtime) --}}
-<link rel="stylesheet" media="screen, print" href="{{ \App\Support\Asset::v('sa5/css/bootstrap.css') }}">
-<link rel="stylesheet" media="screen, print" href="{{ \App\Support\Asset::v('sa5/css/waves.css') }}">
+<link rel="stylesheet" media="screen, print" href="{{ asset_v('sa5/css/bootstrap.css') }}">
+<link rel="stylesheet" media="screen, print" href="{{ asset_v('sa5/css/waves.css') }}">
 
 {{-- Base CSS --}}
-<link rel="stylesheet" media="screen, print" href="{{ \App\Support\Asset::v('sa5/css/smartapp.css') }}">
-<link rel="stylesheet" media="screen, print" href="{{ \App\Support\Asset::v('sa5/css/sa-icons.css') }}">
+<link rel="stylesheet" media="screen, print" href="{{ asset_v('sa5/css/smartapp.css') }}">
+<link rel="stylesheet" media="screen, print" href="{{ asset_v('sa5/css/sa-icons.css') }}">
 
 {{-- Theme Style --}}
 <link id="theme-style" rel="stylesheet" media="screen, print">
 
 {{-- Page specific CSS --}}
-<link rel="stylesheet" media="screen, print" href="{{ \App\Support\Asset::v('sa5/css/iconsdemo.css') }}">
-<link rel="stylesheet" media="screen, print" href="{{ \App\Support\Asset::v('sa5/css/fontawesome.css') }}">
+<link rel="stylesheet" media="screen, print" href="{{ asset_v('sa5/css/iconsdemo.css') }}">
+<link rel="stylesheet" media="screen, print" href="{{ asset_v('sa5/css/fontawesome.css') }}">
 
 {{-- Custom CSS (DataTables loaded via Vite in app.css; other plugins below) --}}
 <link rel="stylesheet" media="screen, print" href="{{ asset('sa5/css/plugin/select2/select2.min.css') }}">
 <link rel="stylesheet" media="screen, print" href="{{ asset('sa5/css/plugin/jquery-ui/jquery-ui.min.css') }}">
 
 {{-- Custom CSS (overrides) --}}
-<link rel="stylesheet" media="screen, print" href="{{ \App\Support\Asset::v('sa5/css/style.css') }}">
+<link rel="stylesheet" media="screen, print" href="{{ asset_v('sa5/css/style.css') }}">
 
 @stack('styles')
 @foreach($custom_css ?? [] as $href)
@@ -51,7 +51,7 @@
     var BASE_URL_ADMIN = {!! json_encode(url('/admin')) !!};
     var THEME_CSS_BASE = {!! json_encode(rtrim(asset('sa5/css'), '/') . '/') !!};
     var NUM_LANG = {!! json_encode((int) ($numLang ?? 0)) !!};
-    var DATATABLE_ELEMENTS_PER_PAGE = {!! json_encode((int) config('custom.datatable_per_page', 50)) !!};
+    var DATATABLE_ELEMENTS_PER_PAGE = {!! json_encode((int) config('custom.datatable_per_page', 25)) !!};
 </script>
 
 

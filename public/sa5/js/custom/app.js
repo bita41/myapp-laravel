@@ -1,3 +1,12 @@
+/**
+ * @deprecated This file is deprecated and will be removed in a future version.
+ * All functionality has been migrated to TypeScript services in resources/js/services/
+ * - AppUtils.dataTableDom → resources/js/services/DataTableService.ts
+ * - applyTableFilters → resources/js/services/DataTableService.ts
+ * - Modal form handlers → resources/js/services/ModalService.ts
+ * Please use the new TypeScript services via window.AppUtils and window.applyTableFilters (which now point to the TypeScript versions).
+ */
+console.warn('[DEPRECATED] Legacy app.js is loaded. Functionality migrated to TypeScript services.');
 
 window.AppUtils = window.AppUtils || {};
 

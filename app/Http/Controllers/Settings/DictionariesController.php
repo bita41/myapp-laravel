@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Support\DataTableEngine;
+use App\Libraries\DataTable\DataTableEngine;
+use App\Libraries\Language\LanguageLib;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,6 +45,7 @@ final class DictionariesController extends Controller
         $custom_css = [];
         $custom_js = [];
         $pageModules = ['settings/dictionaries'];
+        $langKeys = LanguageLib::getLangKeys();
 
         return view('settings.dictionaries.index', compact(
             'languages',
@@ -51,7 +53,8 @@ final class DictionariesController extends Controller
             'numLang',
             'custom_css',
             'custom_js',
-            'pageModules'
+            'pageModules',
+            'langKeys'
         ));
     }
 
@@ -60,34 +63,49 @@ final class DictionariesController extends Controller
     {
         $languages = get_languages();
 
-        return view('settings.dictionaries.create', compact('languages'));
+        return view('settings.dictionaries.add', compact('languages'));
     }
 
     /** Add Ajax – process add form. */
     public function addAjax(Request $request): JsonResponse|RedirectResponse
     {
-        $validated = $request->validate([
-            'parameter' => 'required|string|max:255',
-        ]);
+        try {
+            $validated = $request->validate([
+                'parameter' => 'required|string|max:255',
+            ]);
 
-        $data = [
-            'parameter' => $validated['parameter'],
-            'record_update_date' => now(),
-        ];
-        foreach (get_languages() as $lang) {
-            $file = (string) ($lang['file'] ?? '');
-            if ($file !== '' && Schema::hasColumn('dictionaries', $file)) {
-                $data[$file] = $request->input("dictionar.{$file}", '');
+            $data = [
+                'parameter' => $validated['parameter'],
+                'record_update_date' => now(),
+            ];
+            foreach (get_languages() as $lang) {
+                $file = (string) ($lang['file'] ?? '');
+                if ($file !== '' && Schema::hasColumn('dictionaries', $file)) {
+                    $data[$file] = $request->input("dictionar.{$file}", '');
+                }
             }
+
+            DB::table('dictionaries')->insert($data);
+            invalidate_dictionary_cache();
+
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => l('a-save-succesfully'),
+                    'datatable_id' => $request->input('datatable_id', '')
+                ]);
+            }
+
+            return back()->with('success', l('a-save-succesfully'));
+        } catch (\Exception $e) {
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $e->getMessage()
+                ]);
+            }
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
-
-        DB::table('dictionaries')->insert($data);
-
-        if ($request->wantsJson()) {
-            return response()->json(['success' => true, 'message' => l('a-save-succesfully')]);
-        }
-
-        return back()->with('success', l('a-save-succesfully'));
     }
 
     /** Edit – returns HTML for modal (remote load). */
@@ -105,29 +123,44 @@ final class DictionariesController extends Controller
     /** Edit Ajax – process edit form. */
     public function editAjax(Request $request): JsonResponse|RedirectResponse
     {
-        $validated = $request->validate([
-            'dictionar_id' => 'required|integer|exists:dictionaries,dictionar_id',
-            'parameter' => 'required|string|max:255',
-        ]);
+        try {
+            $validated = $request->validate([
+                'dictionar_id' => 'required|integer|exists:dictionaries,dictionar_id',
+                'parameter' => 'required|string|max:255',
+            ]);
 
-        $data = [
-            'parameter' => $validated['parameter'],
-            'record_update_date' => now(),
-        ];
-        foreach (get_languages() as $lang) {
-            $file = (string) ($lang['file'] ?? '');
-            if ($file !== '' && Schema::hasColumn('dictionaries', $file)) {
-                $data[$file] = $request->input("dictionar.{$file}", '');
+            $data = [
+                'parameter' => $validated['parameter'],
+                'record_update_date' => now(),
+            ];
+            foreach (get_languages() as $lang) {
+                $file = (string) ($lang['file'] ?? '');
+                if ($file !== '' && Schema::hasColumn('dictionaries', $file)) {
+                    $data[$file] = $request->input("dictionar.{$file}", '');
+                }
             }
+
+            DB::table('dictionaries')->where('dictionar_id', $validated['dictionar_id'])->update($data);
+            invalidate_dictionary_cache();
+
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => l('a-edit-succesfully'),
+                    'datatable_id' => $request->input('datatable_id', '')
+                ]);
+            }
+
+            return back()->with('success', l('a-edit-succesfully'));
+        } catch (\Exception $e) {
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $e->getMessage()
+                ]);
+            }
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
-
-        DB::table('dictionaries')->where('dictionar_id', $validated['dictionar_id'])->update($data);
-
-        if ($request->wantsJson()) {
-            return response()->json(['success' => true, 'message' => l('a-edit-succesfully')]);
-        }
-
-        return back()->with('success', l('a-edit-succesfully'));
     }
 
     /** Dictionaries server-side – DataTables AJAX. */

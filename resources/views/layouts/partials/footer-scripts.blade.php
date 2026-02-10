@@ -3,17 +3,17 @@
 <div class="backdrop" data-action="toggle-swap" data-toggleclass="app-mobile-menu-open"></div>
 
 {{-- Core scripts (CI4 order, cache-busting ?v=filemtime) --}}
-<script src="{{ \App\Support\Asset::v('sa5/scripts/smartApp.js') }}"></script>
-<script src="{{ \App\Support\Asset::v('sa5/scripts/smartNavigation.js') }}"></script>
-<script src="{{ \App\Support\Asset::v('sa5/scripts/smartFilter.js') }}"></script>
-<script src="{{ \App\Support\Asset::v('sa5/scripts/thirdparty/bootstrap/bootstrap.bundle.js') }}"></script>
-<script src="{{ \App\Support\Asset::v('sa5/scripts/thirdparty/sortable/sortable.js') }}"></script>
-<script src="{{ \App\Support\Asset::v('sa5/scripts/smartSlimscroll.js') }}"></script>
-<script src="{{ \App\Support\Asset::v('sa5/scripts/thirdparty/wavejs/waves.js') }}"></script>
-<script src="{{ \App\Support\Asset::v('sa5/scripts/iconography.js') }}"></script>
+<script src="{{ asset_v('sa5/scripts/smartApp.js') }}"></script>
+<script src="{{ asset_v('sa5/scripts/smartNavigation.js') }}"></script>
+<script src="{{ asset_v('sa5/scripts/smartFilter.js') }}"></script>
+<script src="{{ asset_v('sa5/scripts/thirdparty/bootstrap/bootstrap.bundle.js') }}"></script>
+<script src="{{ asset_v('sa5/scripts/thirdparty/sortable/sortable.js') }}"></script>
+<script src="{{ asset_v('sa5/scripts/smartSlimscroll.js') }}"></script>
+<script src="{{ asset_v('sa5/scripts/thirdparty/wavejs/waves.js') }}"></script>
+<script src="{{ asset_v('sa5/scripts/iconography.js') }}"></script>
 
 {{-- DataTables loaded via Vite (app.js). Bootbox below. --}}
-<script src="{{ \App\Support\Asset::v('sa5/js/plugin/bootbox/bootbox.min.js') }}"></script>
+<script src="{{ asset_v('sa5/js/plugin/bootbox/bootbox.min.js') }}"></script>
 
 {{-- Plugins --}}
 <script src="{{ asset('sa5/js/plugin/jquery-ui/jquery-ui.min.js') }}"></script>
@@ -22,8 +22,8 @@
 <script src="{{ asset('sa5/js/plugin/slugify/slugify.js') }}"></script>
 
 {{-- Custom (modalHelper + app with AppUtils.dataTableDom, remote modals, form submit) --}}
-<script src="{{ \App\Support\Asset::v('sa5/js/custom/modalHelper.js') }}"></script>
-<script src="{{ \App\Support\Asset::v('sa5/js/custom/app.js') }}"></script>
+<script src="{{ asset_v('sa5/js/custom/modalHelper.js') }}"></script>
+<script src="{{ asset_v('sa5/js/custom/app.js') }}"></script>
 
 <script>
     /* Navigation : smartNavigation.js */
@@ -48,7 +48,7 @@
     }
     /* Waves */
     if (window.Waves) {
-        Waves.attach('.btn:not(.js-waves-off):not(.btn-switch):not(.btn-panel):not(.btn-system):not([data-action="playsound"]), .js-waves-on', ['waves-themed']);
+        Waves.attach('.app-wrap .btn:not(.js-waves-off):not(.btn-switch):not(.btn-panel):not(.btn-system):not([data-action="playsound"]), .app-wrap .js-waves-on', ['waves-themed']);
         Waves.init();
     }
     document.addEventListener('DOMContentLoaded', function() {
